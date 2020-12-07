@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Task Manager</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.0.4/popper.js"></script>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js"></script>
+
+        <link rel="stylesheet" href="css/style.css">
+
+    </head>
+    <body>
+        <div class="row">
+            <nav class="navbar navbar-expand-lg navbar-light col-md-12">
+                <a class="navbar-brand disabled" href="#">Task Manager</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="container">
+            <div class="row d-flex justify-content-end">
+                <button id="listView" class="btn btn-primary mr-2"><i class="fa fa-bars"></i> List</button>
+                <button id="gridView" class="btn btn-primary mr-2"><i class="fa fa-th-large"></i> Grid</button>
+                <div class="btn-group dropdown">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Create
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#userFormModal">User</a>
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#taskFormModal">Task</a>
+                        <a class="dropdown-item" href="#"  data-toggle="modal" data-target="#locationFormModal">Location</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="userOptions">
+                <div class="col-md-6 d-flex justify-content-start">
+                    <h3>Users</h3>
+                </div>
+            </div>
+            <div class="row col-md-12 mt-4">
+                <div id="noUsers" style="display:none;">
+                    <p>No Users to display</p>
+                </div>
+                <ul  class="ul-no-list-style list-group col-md-12">
+                    <div class="row" id="usersContainer">
+
+
+                    </div>
+                </ul>
+            </div>
+            <div class="row mt-4" id="taskOptions">
+                <div class="col-md-6 d-flex justify-content-start">
+                    <h3>Tasks</h3>
+                </div>
+                <div class="col-md-3 d-flex justify-content-start">
+                    <select id="filterByUser" class="custom-select" >
+                        <option selected disabled>Filter By User</option>
+                    </select>
+                </div>
+                <div class="col-md-3 d-flex justify-content-start">
+                    <select id="filterByCountry" class="custom-select" >
+                        <option selected disabled>Filter By Country</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row col-md-12 mt-4">
+                <div id="noTasks" style="display:none;">
+                    <p>No Tasks to display</p>
+                </div>
+                <ul class="ul-no-list-style list-group col-md-12">
+                    <div class="row" id="tasksContainer">
+
+                    </div>
+                </ul>
+            </div>
+            <div class="row mt-4" id="locationOptions">
+                <div class="col-md-6 d-flex justify-content-start">
+                    <h3>Locations</h3>
+                </div>
+            </div>
+            <div class="row col-md-12 mt-4">
+                <div id="noLocations" style="display:none;">
+                    <p>No Locations to display</p>
+                </div>
+                <ul class="ul-no-list-style list-group col-md-12">
+                    <div class="row" id="locationsContainer">
+
+                    </div>
+                </ul>
+            </div>
+        </div>
+
+
+        <!--MODALS-->
+        <!--User modal-->
+        <div class="modal fade" id="userFormModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add User</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body ml-2 mr-2">
+                        <div class="row pt-2">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">First Name:</span>
+                                </div>
+                                <input type="text" class="form-control" id="firstNameInput" aria-describedby="basic-addon3">
+                            </div>
+                        </div>
+                        <div class="row pt-4">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Last Name:</span>
+                                </div>
+                                <input type="text" class="form-control" id="lastNameInput" aria-describedby="basic-addon3">
+                            </div>
+                        </div>
+                        <div class="row pt-4">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Email:</span>
+                                </div>
+                                <input type="email" class="form-control" id="emailInput" aria-describedby="basic-addon3">
+                            </div>
+                        </div>
+                        <div class="row pt-4">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Phone:</span>
+                                </div>
+                                <input type="text" class="form-control" id="phoneInput" aria-describedby="basic-addon3">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="createUserButton" class="btn btn-success" data-dismiss="modal">Create User</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!--Task modal-->
+        <div class="modal fade" id="taskFormModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Task</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body ml-2 mr-2">
+                        <div class="row pt-2">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Title:</span>
+                                </div>
+                                <input type="text" class="form-control" id="titleInput" aria-describedby="basic-addon3">
+                            </div>
+                        </div>
+                        <div class="row pt-4">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Description:</span>
+                                </div>
+                                <input type="text" class="form-control" id="descriptionInput" aria-describedby="basic-addon3">
+                            </div>
+                        </div>
+                        <div class="row pt-4">
+                            <div class="input-group mb-3 mul-select">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">User:</span>
+                                </div>
+                                <select id="usersSelect" class="custom-select" >
+                                    <option selected disabled>Choose User</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row pt-4">
+                            <div class="input-group mb-3 mul-select">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Location:</span>
+                                </div>
+                                <select id="locationsSelect" class="custom-select" >
+                                    <option selected disabled>Choose Location</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="createTaskButton" class="btn btn-success" data-dismiss="modal">Create Task</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!--Location modal-->
+        <div class="modal fade" id="locationFormModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Location</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body ml-2 mr-2">
+                        <div class="row pt-2">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Address:</span>
+                                </div>
+                                <input type="text" class="form-control" id="addressInput" aria-describedby="basic-addon3">
+                            </div>
+                        </div>
+                        <div class="row pt-4">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">City:</span>
+                                </div>
+                                <input type="text" class="form-control" id="cityInput" aria-describedby="basic-addon3">
+                            </div>
+                        </div>
+                        <div class="row pt-4">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Country:</span>
+                                </div>
+                                <input type="text" class="form-control" id="countryInput" aria-describedby="basic-addon3">
+                            </div>
+                        </div>
+                        <div class="row pt-4">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Longitude:</span>
+                                </div>
+                                <input type="text" class="form-control" id="longitudeInput" aria-describedby="basic-addon3">
+                            </div>
+                        </div>
+                        <div class="row pt-4">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Latitude:</span>
+                                </div>
+                                <input type="text" class="form-control" id="latitudeInput" aria-describedby="basic-addon3">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="createLocationButton" class="btn btn-success" data-dismiss="modal">Create Location</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!--END MODALS-->
+
+        <!--USER TEMPLATES-->
+        <!--List View-->
+        <li class="list-group-item col-md-12" style="display:none;" id="userViewCloneList">
+            <div class="row">
+                <div class="col-sm-1 col-xs-2 d-flex justify-content-center align-items-center">
+                    <i class="fas fa-user fa-2x"></i>
+                </div>
+                <div class="col-sm-9 col-xs-8 d-flex align-items-center">
+                    <ul class="ul-no-list-style">
+                        <li id="firstNameList" class="ul-li-display-inline"></li>
+                        <li id="lastNameList" class="ul-li-display-inline"></li>
+                        <li id="emailList" class="ul-li-display-inline"></li>
+                        <li id="phoneList" class="ul-li-display-inline"></li>
+                    </ul>
+                </div>
+                <div class="col-sm-2 col-xs-2 d-flex justify-content-center align-items-center">
+                    <button type="button" class="btn btn-danger remove-post"><span class="glyphicon glyphicon-remove"></span><span class="hidden-xs"> Delete</span></button>
+                </div>
+            </div>
+        </li>
+
+        <!--Grid View-->
+        <li class="list-group-item col-md-4" style="display:none;" id="userViewCloneGrid">
+            <div class="row">
+                <div class="col-md-12 d-flex justify-content-center align-items-center">
+                    <i class="fas fa-user fa-2x"></i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 d-flex justify-content-center">
+                    <ul class="ul-no-list-style">
+                        <div class="row d-flex justify-content-center">
+                            <li id="firstNameGrid"></li>
+                            &nbsp
+                            <li id="lastNameGrid"></li>
+                        </div>
+                        <div class="row d-flex justify-content-center">
+                            <li id="emailGrid"></li>
+                        </div>
+                        <div class="row d-flex justify-content-center">
+                            <li id="phoneGrid"></li>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 d-flex justify-content-center align-items-center">
+                    <button type="button" class="btn btn-danger pull-right remove-post"><span class="glyphicon glyphicon-remove"></span><span class="hidden-xs"> Delete</span></button>
+                </div>
+            </div>
+        </li>
+
+        <!--END OF USER TEMPLATES-->
+
+        <!--TASKS TEMPLATES-->
+        <!--List View-->
+        <li class="list-group-item col-md-12" style="display:none;" id="taskViewCloneList">
+            <div class="row">
+                <div class="col-sm-1 col-xs-2 d-flex justify-content-center align-items-center">
+                    <i class="fal fa-tasks fa-2x"></i>
+                </div>
+                <div class="col-sm-9 col-xs-8 d-flex align-items-center">
+                    <ul class="ul-no-list-style">
+                        <li id="titleList" class="ul-li-display-inline"></li>
+                        <li id="descriptionList" class="ul-li-display-inline"></li>
+                        <li id="locationList" class="ul-li-display-inline"></li>
+                        <li id="userList" class="ul-li-display-inline"></li>
+                    </ul>
+                </div>
+                <div class="col-sm-2 col-xs-2 d-flex justify-content-center align-items-center">
+                    <button type="button" class="btn btn-danger remove-post"><span class="glyphicon glyphicon-remove"></span><span class="hidden-xs"> Delete</span></button>
+                </div>
+            </div>
+        </li>
+
+        <!--Grid View-->
+        <li class="list-group-item col-md-4" style="display:none;" id="taskViewCloneGrid">
+            <div class="row">
+                <div class="col-md-12 d-flex justify-content-center align-items-center">
+                    <i class="fal fa-tasks fa-2x"></i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 d-flex justify-content-center">
+                    <ul class="ul-no-list-style">
+                        <div class="row d-flex justify-content-center align-items-center">
+                            <li id="titleGrid"></li>
+                        </div>
+                        <div class="row d-flex justify-content-center align-items-center">
+                            <li id="descriptionGrid"></li>
+                        </div>
+                        <div class="row d-flex justify-content-center align-items-center">
+                            <li id="userGrid"></li>
+                        </div>
+                        <div class="row d-flex justify-content-center align-items-center">
+                            <li id="locationGrid"></li>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 d-flex justify-content-center align-items-center">
+                    <button type="button" class="btn btn-danger pull-right remove-post"><span class="glyphicon glyphicon-remove"></span><span class="hidden-xs"> Delete</span></button>
+                </div>
+            </div>
+        </li>
+
+        <!--END OF TASK TEMPLATES-->
+
+        <!--LOCATION TEMPLATES-->
+        <!--List View-->
+        <li class="list-group-item col-md-12" style="display:none;" id="locationViewCloneList">
+            <div class="row">
+                <div class="col-sm-1 col-xs-2 d-flex justify-content-center align-items-center">
+                    <i class="fa fa-location-arrow fa-2x"></i>
+                </div>
+                <div class="col-sm-9 col-xs-8 d-flex align-items-center">
+                    <ul class="ul-no-list-style">
+                        <li id="addressList" class="ul-li-display-inline"></li>
+                        <li id="cityList" class="ul-li-display-inline"></li>
+                        <li id="countryList" class="ul-li-display-inline"></li>
+                        (
+                        <li id="longitudeList" class="ul-li-display-inline-no-padding"></li>
+                        ,
+                        <li id="latitudeList" class="ul-li-display-inline-no-padding"></li>
+                        )
+<!--                        <li id="tasksList" class="ul-li-display-inline">-->
+<!--                            <ul id="tasksInLocation">-->
+<!--                            </ul>-->
+<!--                        </li>-->
+                    </ul>
+                </div>
+                <div class="col-sm-2 col-xs-2 d-flex justify-content-center align-items-center">
+                    <button type="button" class="btn btn-danger remove-post"><span class="glyphicon glyphicon-remove"></span><span class="hidden-xs"> Delete</span></button>
+                </div>
+            </div>
+        </li>
+
+        <!--Grid View-->
+        <li class="list-group-item col-md-4" style="display:none;" id="locationViewCloneGrid">
+            <div class="row">
+                <div class="col-md-12 d-flex justify-content-center align-items-center">
+                    <i class="fa fa-location-arrow fa-2x"></i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 d-flex justify-content-center">
+                    <ul class="ul-no-list-style">
+                        <div class="row d-flex justify-content-center align-items-center">
+                            <li id="addressGrid"></li>
+                        </div>
+                        <div class="row d-flex justify-content-center align-items-center">
+                            <li id="cityGrid"></li>
+                        </div>
+                        <div class="row d-flex justify-content-center align-items-center">
+                            <li id="countryGrid"></li>
+                        </div>
+                        <div class="row d-flex justify-content-center">
+                            (
+                            <li id="longitudeGrid"></li>
+                            ,
+                            <li id="latitudeGrid"></li>
+                            )
+                        </div>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 d-flex justify-content-center align-items-center">
+                    <button type="button" class="btn btn-danger pull-right remove-post"><span class="glyphicon glyphicon-remove"></span><span class="hidden-xs"> Delete</span></button>
+                </div>
+            </div>
+        </li>
+
+        <!--END OF LOCATION TEMPLATES-->
+
+
+        <script src="js/main.js"></script>
+    </body>
+</html>

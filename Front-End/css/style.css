@@ -1,0 +1,31 @@
+nav{
+    background-color: #a3daff;
+}
+
+.navbar-brand{
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.container{
+    margin-top:2rem;
+}
+
+.ul-no-list-style{
+    list-style-type: none;
+    padding-inline-start: 0px;
+}
+
+.ul-li-display-inline{
+    display: inline;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+.ul-li-display-inline-no-padding{
+    display: inline;
+}
+
+.mul-select{
+    width: 100%;
+}
