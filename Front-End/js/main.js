@@ -148,6 +148,10 @@ function displayUserInformationList(response, view, emptyContainer){
                 }
             });
 
+            $("#usersSelect option[value='" + value.id + "']").remove();
+            $("#filterByUser option[value='" + value.id + "']").remove();
+
+
             checkForDisplayedUsers();
         });
 
@@ -357,6 +361,9 @@ function displayLocationInformationList(response, view, emptyContainer) {
                     locations.push(value);
                 }
             });
+
+            $("#locationsSelect option[value='" + value.id + "']").remove();
+            $("#filterByCountry option[value='" + value.country + "']").remove();
 
             checkForDisplayedLocations();
         });
